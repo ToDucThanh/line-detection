@@ -1,0 +1,14 @@
+# -------- Information -----------
+Authour: To Duc Thanh
+Date: 02/2024
+
+# -------- Source ----------
+data_dir: src/data
+model_dir: src/models
+working_dir: src/workdir
+test_dir: tests
+
+# -------- Linting -----------
+ruff_file_path: ruff.toml
+isort_file_path: .isort.cfg
+

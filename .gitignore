@@ -3,4 +3,3 @@ __pycache__/
 tmp.*
 workdir/experiments
 src/data/*/*
-! src/data/doc.md

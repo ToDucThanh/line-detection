@@ -1,0 +1,67 @@
+# ------ system parameters ------
+sys:
+  cpu: true
+  num_workers: 4
+  
+
+# ------ data parameters ------
+dataset:
+  root_path: src/data
+  name: wireframe
+  input_size: 512
+  with_centermap_extend: false
+  train_data_file: train.txt
+  test_data_file: test.txt
+
+# ------ model parameters ------
+model:
+  name: ""
+  with_deconv: false
+  num_classes: 1
+
+# ------ pipeline parameters ------
+train:
+  do_train: true
+  batch_size: 48
+  save_dir: ""
+  gradient_accumulation_steps: 1
+  num_train_epochs: 170
+  use_step_lr_policy: false
+  warmup_steps: 200
+  learning_rate: 0.0008
+  dropout: 0.1
+  milestones: [100, 150]
+  milestones_in_epoch: true
+  lr_decay_gamma: 0.1
+  weight_decay: 0.000001
+  device_ids: 0
+  adam_epsilon: 1e-6
+  early_stop_n: 200
+  num_workers: 8
+  log_steps: 50
+  img_dir: ""
+  label_fn: ""
+  data_cache_dir: ""
+  with_cache: false
+  cache_to_mem: false
+  load_from: ""
+
+val:
+  batch_size: 8
+  img_dir: ""
+  label_fn: ""
+  val_after_epoch: 0
+
+loss:
+  loss_weight_dict_list: []
+  loss_type: 1*L1
+  with_sol_loss: True
+  with_match_loss: False
+  with_focal_loss: True
+  match_sap_thresh: 5.0
+  focal_loss_level: 0
+
+decode:
+  score_thresh: 0.05
+  len_thresh: 5
+  top_k: 500

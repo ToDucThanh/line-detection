@@ -4,7 +4,7 @@
 
 The Wireframe dataset consists of 5,462 images (5,000 for training, 462 for test) of indoor and outdoor man-made scenes. \
 Dataset link:
-[One Drive]([OneDrive](https://1drv.ms/u/s!AqQBtmo8Qg_9uHpjzIybaIfyJ-Zf?e=Fofbch))
+[One Drive](https://1drv.ms/u/s!AqQBtmo8Qg_9uHpjzIybaIfyJ-Zf?e=Fofbch)
 
 ### Raw dataset
 

@@ -1,4 +1,8 @@
-from src.models.pipeline.mlsd.train import TrainingPipeline
+# from src.models.pipeline.mlsd.train import TrainingPipeline
+import torch
+
+from src.models.networks.mobilev2_mlsd_tiny_net import MobileV2_MLSD_Tiny
+from src.models.pipeline.mlsd.inference import InferencePipeline
 from src.utils.placeholder import Box
 
 if __name__ == "__main__":

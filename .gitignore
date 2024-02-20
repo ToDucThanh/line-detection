@@ -1,5 +1,5 @@
 .vscode/
 __pycache__/
 tmp.*
-workdir/experiments
+src/workdir/experiments/*
 src/data/*/*

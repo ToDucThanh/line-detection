@@ -51,8 +51,8 @@ def parse_label_file_info(img_dir, label_file):
             item = {
                 "label": "line",
                 "points": [
-                    [np.clip(np.float(l[0]), 0, w), np.clip(np.float(l[1]), 0, h)],
-                    [np.clip(np.float(l[2]), 0, w), np.clip(np.float(l[3]), 0, h)],
+                    [np.clip(np.float64(l[0]), 0, w), np.clip(np.float64(l[1]), 0, h)],
+                    [np.clip(np.float64(l[2]), 0, w), np.clip(np.float64(l[3]), 0, h)],
                 ],
                 "group_id": None,
                 "shape_type": "line",
@@ -63,9 +63,9 @@ def parse_label_file_info(img_dir, label_file):
     return infos
 
 
-class Line_Dataset(Dataset):
+class LineDataset(Dataset):
     def __init__(self, cfg, is_train):
-        super(Line_Dataset, self).__init__()
+        super(LineDataset, self).__init__()
 
         self.cfg = cfg
         self.min_len = cfg.decode.len_thresh
@@ -81,7 +81,7 @@ class Line_Dataset(Dataset):
         self.cache_dir = cfg.train.data_cache_dir
         self.with_cache = cfg.train.with_cache
 
-        print("==> load label..")
+        print("==> load label ...")
         if self.with_cache:
             ann_cache_fn = (
                 self.cache_dir + "/" + os.path.basename(self.label_fn) + ".cache"
@@ -395,3 +395,47 @@ class Line_Dataset(Dataset):
             sol_lines_512_tensor,
             ann["img_full_fn"],
         )
+
+
+def LineDataset_collate_fn(batch):
+    batch_size = len(batch)
+    h, w, _ = batch[0][0].shape
+    images = np.zeros((batch_size, 3, h, w), dtype=np.float32)
+    labels = np.zeros((batch_size, 16, h // 2, w // 2), dtype=np.float32)
+    img_fns = []
+    img_origin_list = []
+    norm_lines_512_all = []
+    norm_lines_512_all_tensor_list = []
+    sol_lines_512_all_tensor_list = []
+
+    for inx in range(batch_size):
+        (
+            im,
+            img_origin,
+            label_mask,
+            norm_lines_512,
+            norm_lines_512_tensor,
+            sol_lines_512,
+            img_fn,
+        ) = batch[inx]
+
+        images[inx] = im.transpose((2, 0, 1))
+        labels[inx] = label_mask
+        img_origin_list.append(img_origin)
+        img_fns.append(img_fn)
+        norm_lines_512_all.append(norm_lines_512)
+        norm_lines_512_all_tensor_list.append(norm_lines_512_tensor)
+        sol_lines_512_all_tensor_list.append(sol_lines_512)
+
+    images = torch.from_numpy(images)
+    labels = torch.from_numpy(labels)
+
+    return {
+        "xs": images,
+        "ys": labels,
+        "img_fns": img_fns,
+        "origin_imgs": img_origin_list,
+        "gt_lines_512": norm_lines_512_all,
+        "gt_lines_tensor_512_list": norm_lines_512_all_tensor_list,
+        "sol_lines_512_all_tensor_list": sol_lines_512_all_tensor_list,
+    }

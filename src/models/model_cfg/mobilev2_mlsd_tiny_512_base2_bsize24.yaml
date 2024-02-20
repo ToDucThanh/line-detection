@@ -10,6 +10,7 @@ datasets:
 model:
   model_name: "mobilev2_mlsd"
   with_deconv: True
+  weight_path: "src/models/weights/mlsd_tiny_512_fp32.pth"
 
 train:
   save_dir: "src/workdir/models/mobilev2_mlsd_tiny_512_bsize24/"

@@ -23,8 +23,8 @@ if __name__ == "__main__":
     )
     output = inference_pipeline.run(
         image_path="src/data/v1.1/train/00030077.jpg",
-        image_save_name="00030077_output",
-        save_dir="/Users/mac/Main/FPT/DN-airport/research/line-detection/combination/src/workdir/experiments/output",
+        image_save_name="00030077_output1",
+        save_dir="src/workdir/experiments/output",
         is_saving=True,
     )
     print(output)

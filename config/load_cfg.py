@@ -29,4 +29,11 @@ def load_config_file(cfg_path: Optional[Path] = None) -> Optional[Dict]:
             return yaml_data
 
 
+class DictDotNotation(dict):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__dict__ = self
+
+
 cfg = load_config_file()
+cfg = DictDotNotation(cfg)

@@ -37,3 +37,34 @@ train.json
         "width": ... # width of the image
     }
 ```
+
+### Alternative dataset format
+
+```bash
+|── src/
+    └── data/
+        └── raw/
+            └── train/
+                └── images/
+                    ├── 0000001.png\n
+                    └── 0000002.png
+                └── labels/
+                    ├── 0000001.txt\n
+                    └── 0000002.txt
+            └── tests/
+                └── images/
+                    ├── 0000003.png\n
+                    └── 0000004.png
+                └── labels/
+                    ├── 0000003.txt\n
+                    └── 0000004.txt
+
+Each line of the txt file is the coordinates of one line in the corresponding image.
+Example:
+    File 0000001.txt:
+    372.43095088, 118.95949936, 374.10025597, 212.82363129
+    435.50227356, 123.33520508, 505.86045074,  -7.40013885
+    ....
+Interpret: (x1, y1, x2, y2)
+
+```

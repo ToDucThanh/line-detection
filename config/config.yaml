@@ -8,6 +8,15 @@ model_dir: src/models
 working_dir: src/workdir
 test_dir: tests
 
+# -------- Model ----------
+model_config_file: src/models/model_cfg/mobilev2_mlsd_tiny_512_base2_bsize24.yaml
+
+
+# -------- Data -----------
+raw_data_path: src/data/raw/
+raw_pickle_data_path: src/data/raw/pointlines
+processed_data_path: src/data/processed
+
 # -------- Linting -----------
 ruff_file_path: ruff.toml
 isort_file_path: .isort.cfg

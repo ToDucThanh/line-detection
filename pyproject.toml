@@ -24,6 +24,7 @@ scikit-image = "^0.22.0"
 albumentations = "^1.4.0"
 tqdm = "^4.66.2"
 redis = "^5.0.1"
+loguru = "^0.7.2"
 
 [[tool.poetry.source]]
 name = "pytorch-cpu-src"

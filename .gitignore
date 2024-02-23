@@ -4,3 +4,4 @@ venv/
 tmp.*
 src/workdir/experiments/*
 src/data/*/*
+!src/workdir/experiments/output

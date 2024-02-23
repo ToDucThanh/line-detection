@@ -70,7 +70,8 @@ Interpret: (x1, y1, x2, y2)
 
 ## Setup
 
-> **_NOTE:_** Right now, the `dev` branch is the most up-to-date.
+> **_NOTE:_** Right now, the `dev` branch is the most up-to-date.\
+> **_WARNING:_** The required python version to install the environment must be greater than or equal 3.9.0
 
 ### Option 1: Install with poetry
 

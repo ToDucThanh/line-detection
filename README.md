@@ -133,6 +133,8 @@ line_detector = LineDetectionDemo(
 outputs = line_detector.run()
 ```
 
+The visualization is `src/workdir/experiments/output/sample_image.jpg`
+
 Run with one video:
 
 ```bash
@@ -144,3 +146,5 @@ line_detector = LineDetectionDemo(
 )
 outputs = line_detector.run()
 ```
+
+The visualization is `src/workdir/experiments/output/sample_image_{i}.jpg`

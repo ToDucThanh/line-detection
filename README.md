@@ -1,4 +1,4 @@
-# Dataset
+# Line detection
 
 ## Wireframe dataset
 
@@ -66,5 +66,63 @@ Example:
     435.50227356, 123.33520508, 505.86045074,  -7.40013885
     ....
 Interpret: (x1, y1, x2, y2)
+```
 
+## Setup
+
+> **_NOTE:_** Right now, the `dev` branch is the most up-to-date.
+
+### Option 1: Install with poetry
+
+Clone the repository and checkout dev branch:
+
+```bash
+git clone https://github.com/ToDucThanh/line_detection.git
+cd line_detection
+git checkout dev
+```
+
+Install the environments:
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -U pip setuptools
+pip install poetry
+poetry install --no-root
+```
+
+If you only want to run demo, run:
+
+```bash
+poetry install --no-root --without dev
+```
+
+## Demo
+
+Input: image or video.
+Output: list of numpy array: [np.array([x1, y1, x2, y2]), ...]
+
+Run with one image:
+
+```bash
+
+from workflow.line_detection_dev import LineDetectionDemo
+
+line_detector = LineDetectionDemo(
+    image_path="src/workdir/experiments/00030043.jpg"
+)
+outputs = line_detector.run()
+```
+
+Run with one video:
+
+```bash
+
+from workflow.line_detection_dev import LineDetectionDemo
+
+line_detector = LineDetectionDemo(
+    video_path="src/videos/sample_2images_20fps.mp4"
+)
+outputs = line_detector.run()
 ```

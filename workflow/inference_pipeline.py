@@ -150,6 +150,3 @@ class InferencePipeline:
         displacement = displacement.transpose((1, 2, 0))
 
         return ptss, scores, displacement
-        displacement = displacement.transpose((1, 2, 0))
-
-        return ptss, scores, displacement

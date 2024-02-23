@@ -98,6 +98,24 @@ If you only want to run demo, run:
 poetry install --no-root --without dev
 ```
 
+### Option 2: Install without poetry
+
+Clone the repository and checkout dev branch:
+
+```bash
+git clone https://github.com/ToDucThanh/line_detection.git
+cd line_detection
+git checkout dev
+```
+
+Install the environments:
+
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
 ## Demo
 
 Input: image or video.

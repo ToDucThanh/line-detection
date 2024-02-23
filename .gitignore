@@ -1,5 +1,6 @@
 .vscode/
 __pycache__/
+venv/
 tmp.*
 src/workdir/experiments/*
 src/data/*/*

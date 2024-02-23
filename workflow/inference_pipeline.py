@@ -1,5 +1,8 @@
 import os
-from typing import List
+from typing import (
+    List,
+    Optional,
+)
 
 import cv2
 import numpy as np
@@ -12,9 +15,7 @@ class InferencePipeline:
         self.device = device
         self.model = model
         self.model.to(device)
-        self.model.load_state_dict(
-            torch.load(model_weight_path, map_location=device), strict=True
-        )
+        self.model.load_state_dict(torch.load(model_weight_path, map_location=device), strict=True)
         self.model.eval()
 
     def read_and_preprocess_image(self, image_path: str) -> np.ndarray:
@@ -23,8 +24,20 @@ class InferencePipeline:
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         return img
 
-    def process(self, image_path: str) -> List[float]:
-        img = self.read_and_preprocess_image(image_path)
+    def preprocess(self, img: np.ndarray):
+        img = cv2.resize(img, (512, 512))
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        return img
+
+    def process(
+        self,
+        image_path: Optional[str] = None,
+        image: Optional[np.ndarray] = None,
+    ) -> List[float]:
+        if image is not None:
+            img = self.preprocess(image)
+        else:
+            img = self.read_and_preprocess_image(image_path)
         lines = self._pred_lines(img, self.model, [512, 512], 0.1, 20)
         return img, lines
 
@@ -46,18 +59,21 @@ class InferencePipeline:
         cv2.imwrite(f"{save_dir}/{image_save_name}.jpg", img)
 
     def run(
-        self, image_path: str, image_save_name: str, save_dir: str, is_saving: bool
+        self,
+        image_path: Optional[str] = None,
+        image: Optional[np.ndarray] = None,
+        image_save_name: str = "sample_image",
+        save_dir: str = "./src/workdir/experiments/output",
+        is_saving: bool = True,
     ):
-        img, lines = self.process(image_path)
+        img, lines = self.process(image_path=image_path, image=image)
         if is_saving:
             self.postprocess(
                 img=img, lines=lines, image_save_name=image_save_name, save_dir=save_dir
             )
         return img, lines
 
-    def _pred_lines(
-        self, image, model, input_shape=[512, 512], score_thr=0.10, dist_thr=20.0
-    ):
+    def _pred_lines(self, image, model, input_shape=[512, 512], score_thr=0.10, dist_thr=20.0):
         h, w, _ = image.shape
         h_ratio, w_ratio = [h / input_shape[0], w / input_shape[1]]
 
@@ -79,9 +95,7 @@ class InferencePipeline:
 
         batch_image = torch.from_numpy(batch_image).float().to(self.device)
         outputs = model(batch_image)
-        pts, pts_score, vmap = InferencePipeline._deccode_output_score_and_ptss(
-            outputs, 200, 3
-        )
+        pts, pts_score, vmap = InferencePipeline._deccode_output_score_and_ptss(outputs, 200, 3)
         start = vmap[:, :, :2]
         end = vmap[:, :, 2:]
         dist_map = np.sqrt(np.sum((start - end) ** 2, axis=-1))
@@ -133,6 +147,9 @@ class InferencePipeline:
         ptss = ptss.detach().cpu().numpy()
         scores = scores.detach().cpu().numpy()
         displacement = displacement.detach().cpu().numpy()
+        displacement = displacement.transpose((1, 2, 0))
+
+        return ptss, scores, displacement
         displacement = displacement.transpose((1, 2, 0))
 
         return ptss, scores, displacement

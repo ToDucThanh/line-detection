@@ -130,7 +130,12 @@ from workflow.line_detection_dev import LineDetectionDemo
 line_detector = LineDetectionDemo(
     image_path="src/workdir/experiments/00030043.jpg"
 )
-outputs = line_detector.run()
+
+outputs = line_detector.run(
+    image_save_name="sample_image",
+    save_dir="./src/workdir/experiments/output",
+    is_saving=True,
+)
 ```
 
 The visualization is `src/workdir/experiments/output/sample_image.jpg`
@@ -144,7 +149,12 @@ from workflow.line_detection_dev import LineDetectionDemo
 line_detector = LineDetectionDemo(
     video_path="src/videos/sample_2images_20fps.mp4"
 )
-outputs = line_detector.run()
+
+outputs = line_detector.run(
+    image_save_name="sample_image",
+    save_dir="./src/workdir/experiments/output",
+    is_saving=True,
+)
 ```
 
 The visualization is `src/workdir/experiments/output/sample_image_{i}.jpg`
